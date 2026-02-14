@@ -216,7 +216,7 @@ export function useBoard(boardId: string) {
 
       setColumns((previousColumn) =>
         previousColumn.map((column) =>
-          column.id ? { ...column, ...updatedColumn } : column,
+          column.id === columnId ? { ...column, ...updatedColumn } : column,
         ),
       );
       return updatedColumn;
