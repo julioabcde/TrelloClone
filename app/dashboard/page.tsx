@@ -45,6 +45,12 @@ export default function DashboardPage() {
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
   const [showUpgradeDialog, setShowUpgradeDialog] = useState<boolean>(false);
 
+  function formatDateValue(date: Date | undefined): string {
+    if (!date) return "";
+    const iso = date.toISOString();
+    return iso ? iso.split("T")[0] : "";
+  }
+
   const [filters, setFilters] = useState({
     search: "",
     dateRange: {
@@ -270,6 +276,7 @@ export default function DashboardPage() {
               id="search"
               placeholder="Search boards..."
               className="pl-18"
+              value={filters.search}
               onChange={(e) =>
                 setFilters((prev) => ({ ...prev, search: e.target.value }))
               }
@@ -396,6 +403,7 @@ export default function DashboardPage() {
               <Input
                 id="search"
                 placeholder="Search board titles..."
+                value={filters.search}
                 onChange={(e) =>
                   setFilters((prev) => ({ ...prev, search: e.target.value }))
                 }
@@ -408,6 +416,7 @@ export default function DashboardPage() {
                   <Label className="text-xs">Start Range</Label>
                   <Input
                     type="date"
+                    value={formatDateValue(filters.dateRange.from)}
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -425,6 +434,7 @@ export default function DashboardPage() {
                   <Label className="text-xs">End Range</Label>
                   <Input
                     type="date"
+                    value={formatDateValue(filters.dateRange.to)}
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -449,6 +459,7 @@ export default function DashboardPage() {
                     type="number"
                     min={0}
                     placeholder="Min tasks"
+                    value={filters.taskCount.min ?? ""}
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
@@ -466,6 +477,7 @@ export default function DashboardPage() {
                     type="number"
                     min={0}
                     placeholder="Max tasks"
+                    value={filters.taskCount.max ?? ""}
                     onChange={(e) =>
                       setFilters((prev) => ({
                         ...prev,
